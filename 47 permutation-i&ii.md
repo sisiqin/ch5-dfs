@@ -26,21 +26,18 @@
 ```
 var permuteUnique = function(nums) {
     let results = [];
-	if(!nums || nums.length === 0) return results;
-	nums.sort((a, b) => a - b);
-	
-	const helper = (results, nums, subset, visited) => {
-		if(subset.length === nums.length) results.push(subset.slice());
-
-		for(let i = 0; i < nums.length; i++) {
-			if(visited[i] === true) continue;
-			if(i !== 0 && nums[i] === nums[i - 1] && !visited[i - 1]) continue; // !visited[i - 1] 就是说2'被跳过了
-      
-      subset.push(nums[i]);
-			visited[i] = true;
-			helper(results, nums, subset, visited);
-			subset.pop();
-			delete visited[i];
+    if(!nums || nums.length === 0) return results;
+    nums.sort((a, b) => a - b);	
+    const helper = (results, nums, subset, visited) => {
+        if(subset.length === nums.length) results.push(subset.slice());
+	for(let i = 0; i < nums.length; i++) {
+		if(visited[i] === true) continue;
+		if(i !== 0 && nums[i] === nums[i - 1] && !visited[i - 1]) continue; // !visited[i - 1] 就是说2'被跳过了
+      		subset.push(nums[i]); ----------------->>
+		visited[i] = true;    ------------------>
+		helper(results, nums, subset, visited); ----镜像操作-----
+		subset.pop();        <<------------------
+		delete visited[i];   <-------------------
 		}
 	}
 	helper(results, nums, [], {})
